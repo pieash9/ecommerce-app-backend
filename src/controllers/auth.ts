@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { prismaClient } from "..";
 import { compareSync, hashSync } from "bcrypt";
 import * as jwt from "jsonwebtoken";
@@ -8,11 +8,7 @@ import { ErrorCode } from "../exceptions/root";
 import { SignupSchema } from "../schema/users";
 import { NotFoundException } from "../exceptions/not-found";
 
-export const signup = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const signup = async (req: Request, res: Response) => {
   SignupSchema.parse(req.body);
 
   const { name, email, password } = req.body;
@@ -63,4 +59,9 @@ export const login = async (req: Request, res: Response) => {
   const token = jwt.sign({ userId: user.id }, JWT_SECRET as string);
 
   res.json({ user, token });
+};
+
+// me -> return the logged in user
+export const me = async (req: Request, res: Response) => {
+  res.json(req.user);
 };
