@@ -43,7 +43,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
       where: { id: +req.params.id },
     });
 
-    res.json({ message: "Product deleted" });
+    res.json({ success: true, message: "Product deleted" });
   } catch (error) {
     throw new NotFoundException(
       "Product not found",
