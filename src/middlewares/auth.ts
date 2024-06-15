@@ -28,11 +28,11 @@ export const authMiddleware = async (
       return next(
         new UnauthorizedException("Unauthorized", ErrorCode.UNAUTHORIZED)
       );
-    } else {
-      req.user = user;
-      // 5. attach the user to the current request object
-      next();
     }
+
+    req.user = user;
+    // 5. attach the user to the current request object
+    next();
   } catch (error) {
     next(new UnauthorizedException("Unauthorized", ErrorCode.UNAUTHORIZED));
   }
